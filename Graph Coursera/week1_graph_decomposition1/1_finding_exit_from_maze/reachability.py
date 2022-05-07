@@ -4,7 +4,33 @@ import sys
 
 def reach(adj, x, y):
     #write your code here
-    return 0
+    if len(adj[x]) == 0:
+        return 0
+    
+    # home keeping variables
+    visited = [0]*len(adj)
+    predecessors = {}
+    # we start from beginning and fill in the predecessors dictionary
+    # we will then read this dictionary to see if a path exists from x to y
+    predecessors[x] = None
+    visited[x] = 1
+    explore(adj, adj[x], x, visited, predecessors)
+    
+    if y in predecessors:
+        return 1
+    else:
+        return 0
+    
+
+def explore(adj, start, parent, visited, predecessors):
+    #visited[start] = 1
+    for neighbour in start:
+         if not visited[neighbour]:
+             visited[neighbour] = 1
+             predecessors[neighbour] = parent
+             explore(adj, adj[neighbour], neighbour, visited, predecessors)         
+    return
+
 
 if __name__ == '__main__':
     input = sys.stdin.read()
